@@ -37,6 +37,7 @@ class Matrix(LedMatrix):
                 button.Update(image_filename=LED_OFF)
         self.clear()
 
+    # TODO: Redesign the GUI to include actual columns
     def build_layout(self, rows=8, cols=8):
         self.layout = [[sg.T('   ')] + [sg.T('{}'.format(str(i)), pad=(13, 0), font='Any 13') for i in range(8)]]
         for i in range(rows):
