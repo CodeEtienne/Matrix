@@ -49,7 +49,7 @@ class Matrix(LedMatrix):
         last_row = [sg.Button(str(i), key=(8, i), pad=(5, 5), size=(5, 3)) for i in range(0, 8)]
         last_row.insert(0, sg.T('   '))
         self.layout.append(last_row)
-        command_row = [sg.T('   ')] + [sg.Button('Clear', size=(20, 3), pad=(5, 3))]
+        command_row = [sg.T('   ')] + [sg.Button('Clear', size=(20, 3), pad=(5, 15))]
         self.layout.append(command_row)
 
     @staticmethod
