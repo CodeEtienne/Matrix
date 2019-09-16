@@ -6,3 +6,5 @@ It presents a GUI (Made with PySimpleGUI) that allows the user to light up any s
 ![Matrix GUI](/Images/README.md/Matrix_0.1.png) <!-- .element height="50%" width="50%" -->
 ![Matrix GUI - ON](/Images/README.md/Matrix_0.1_on.png)<!-- .element height="50%" width="50%" -->
 
+<img src="/Images/README.md/Matrix_0.1.png" width="50%" title="Matrix GUI">
+
