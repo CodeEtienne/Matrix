@@ -2,17 +2,21 @@ import PySimpleGUI as sg
 from MatrixDriver import LedMatrix
 from pyfirmata import ArduinoMega
 
+ON = 1
+OFF = 0
+
 PORT = '/dev/cu.usbmodem144101'
 RATE = 57600
 PIN_DATA_IN = 12
 PIN_LOAD = 11
 PIN_CLOCK = 10
 
-LED_ON = 'Images/red-led-on.png'
-LED_OFF = 'Images/red-led-off.png'
+images = {
+    ON: 'Images/red-led-on.png',
+    OFF: 'Images/red-led-off.png'
+}
 
-ON = 1
-OFF = 0
+
 
 
 class Matrix(LedMatrix):
@@ -26,9 +30,11 @@ class Matrix(LedMatrix):
         self.layout = []
         self.build_layout()
 
+    # Creates an 8x8 list to keep track of the LEDs in memory
     def initialize_matrix(self):
         self.logicMatrix = [[0 for i in range(0, 8)] for j in range(0, 8)]
 
+    # Turns off all LEDs on the GUI and on the actual LED matrix
     def reset_matrix(self, window):
         self.initialize_matrix()
         for i in range(0, 8):
@@ -54,43 +60,26 @@ class Matrix(LedMatrix):
 
     @staticmethod
     def render_led_button(key, state=OFF):
-        if state == ON:
-            image = LED_ON
-        else:
-            image = LED_OFF
-        return sg.RButton('', image_filename=image, size=(1, 1), pad=(5, 5), key=key)
+        return sg.RButton('', image_filename=images[state], size=(1, 1), pad=(5, 5), key=key)
 
     def set_led(self, row, col, window, state):
         button = window.FindElement(key=(row, col))
-        if state == ON:
-            self.logicMatrix[row][col] = ON
-            button.Update(image_filename=LED_ON)
-            self.draw_matrix(self.logicMatrix)
-        else:
-            self.logicMatrix[row][col] = OFF
-            button.Update(image_filename=LED_OFF)
-            self.draw_matrix(self.logicMatrix)
+        self.logicMatrix[row][col] = state
+        button.Update(image_filename=images[state])
+        self.draw_matrix(self.logicMatrix)
 
     def set_row(self, row, window, state):
-        if state == ON:
-            image = LED_ON
-        else:
-            image = LED_OFF
         for i in range(0, 8):
             self.logicMatrix[row][i] = state
             button = window.FindElement(key=(row, i))
-            button.Update(image_filename=image)
+            button.Update(images[state])
         self.draw_matrix(self.logicMatrix)
 
     def set_col(self, col, window, state):
-        if state == ON:
-            image = LED_ON
-        else:
-            image = LED_OFF
         for i in range(0, 8):
             self.logicMatrix[i][col] = state
             button = window.FindElement(key=(i, col))
-            button.Update(image_filename=image)
+            button.Update(image_filename=images[state])
         self.draw_matrix(self.logicMatrix)
 
     def change_col(self, col, window):
